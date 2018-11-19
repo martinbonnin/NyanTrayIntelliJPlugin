@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.SwingUtilities
 
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
-object Tray {
+object Tray: BaseTray {
     private const val MENU_ITEM_OVERALL = "Since %s: %s"
     private const val MENU_ITEM_YEAR = "This year: %s"
     private const val MENU_ITEM_MONTH = "This month: %s"
@@ -78,8 +78,8 @@ object Tray {
         }
     }
     private val trayIcon: TrayIcon by lazy {
-        TrayIcon(
-            Images.nyan[0],
+        val trayIcon = TrayIcon(
+            images[0],
             MENU_ITEM_ABOUT,
             PopupMenu().apply {
                 add(overallMenuItem)
@@ -96,9 +96,12 @@ object Tray {
                 )
             }
         )
+
+        trayIcon.isImageAutoSize = true
+        trayIcon
     }
 
-    fun showIcon() {
+    override fun showIcon() {
         if (showing.get()) return
         if (!SystemTray.isSupported()) return
         showing.set(true)
@@ -109,7 +112,7 @@ object Tray {
         }
     }
 
-    fun hideIcon() {
+    override fun hideIcon() {
         if (!showing.get()) return
         if (!SystemTray.isSupported()) return
         showing.set(false)
@@ -127,9 +130,11 @@ object Tray {
         dayMenuItem.label = getFormattedTimeCountDay()
     }
 
+    var images = Images.nyan
+
     private suspend fun startTrayIconAnimation() {
         while (true) {
-            for (i in Images.nyan) {
+            for (i in images) {
                 trayIcon.image = i
                 delay(ANIMATION_DELAY_MS)
             }

@@ -45,6 +45,10 @@ class NyanTrayApplicationComponent : ApplicationComponent {
     private var loopJob: Job? = null
     private var progressOngoing: Boolean = false
 
+    val tray:BaseTray by lazy {
+        Tray
+    }
+
     override fun getComponentName() = COMPONENT_NAME
 
     override fun initComponent() {
@@ -95,10 +99,10 @@ class NyanTrayApplicationComponent : ApplicationComponent {
     private fun onProgressOngoing(progressOngoing: Boolean) {
         if (progressOngoing) {
             TimeCount.startCountingTime()
-            Tray.showIcon()
+            tray.showIcon()
         } else {
             TimeCount.stopCountingTime()
-            Tray.hideIcon()
+            tray.hideIcon()
         }
     }
 

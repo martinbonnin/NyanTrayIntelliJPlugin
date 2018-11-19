@@ -45,6 +45,13 @@ object Images {
         )
     }
 
+    val sonic by lazy {
+        arrayOf(
+            getImage("sonic-0.png"),
+            getImage("sonic-1.png")
+        )
+    }
+
     private fun getImage(imageName: String): Image {
         val javaClass = Images::class.java
         val resourcesPath = javaClass.`package`.name.replace('.', '/')

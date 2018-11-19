@@ -12,3 +12,6 @@ build
 .idea/misc.xml
 .idea/workspace.xml
 .idea/vcs.xml
+.idea/libraries
+.idea/modules.xml
+.idea/.name
